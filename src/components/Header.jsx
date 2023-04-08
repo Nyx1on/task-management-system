@@ -1,25 +1,83 @@
 import React from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import "./header.scss";
 
-const Header = () => {
+const Header = ({ user, handleLogout }) => {
+  const userId = user?.uid;
+  console.log(user?.displayName);
+
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
-        <Container fluid="md">
-          <Navbar.Brand href="/">Home</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/add/:id">Create</Nav.Link>
-            <Nav.Link href="/about">About</Nav.Link>
-          </Nav>
-          <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            <a href="/">Login</a>
-          </Navbar.Text>
-        </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="/">
+          Home
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link" href="/add/:id">
+                Create
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/about">
+                About
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link disabled" href="#">
+                Disabled
+              </a>
+            </li>
+          </ul>
+        </div>
+        {userId ? (
+          <>
+            <div className="profile-logo">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                alt="logo"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                }}
+              />
+            </div>
+            <p style={{ marginTop: "15px", marginLeft: "10px" }}>
+              {user?.displayName}
+            </p>
+            <li className="nav-item nav-link">
+              <a className="nav-link" href="/auth" onClick={handleLogout} id="log">
+                Logout
+              </a>
+            </li>
+          </>
+        ) : (
+          <>
+            <div id="login">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a className="nav-link" href="/auth" id="log">
+                    Login
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </>
+        )}
+      </nav>
+    </>
   );
 };
 
