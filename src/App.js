@@ -11,14 +11,11 @@ import Notfound from './pages/Notfound';
 import Header from './components/Header';
 import { useEffect,useState } from 'react';
 import Auth from './pages/Auth';
-import {useNavigate} from 'react-router-dom';
 import {auth} from './firebase';
 import { signOut } from 'firebase/auth';
 
 function App() {
   const [user, setUser] = useState(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {

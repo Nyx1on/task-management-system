@@ -34,11 +34,6 @@ const Header = ({ user, handleLogout }) => {
                 About
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">
-                Disabled
-              </a>
-            </li>
           </ul>
         </div>
         {userId ? (
