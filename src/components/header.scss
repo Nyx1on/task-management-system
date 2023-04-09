@@ -1,8 +1,16 @@
 .navbar {
   padding: 10px 10px;
+  background-color: rgb(239, 239, 239);
+
+  #logo{
+    font-size: 25px;
+    padding-left: 20px;
+    padding-right: 0px;
+    margin-right: 5px;
+  }
 
   .nav-item {
-    padding-left: 30px;
+    padding-left: 10px;
 
     #log{
         padding-right: 50px;

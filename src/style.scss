@@ -203,10 +203,10 @@ $yellow:#f5bc04;
 }
 
 .title {
-    font-size: 17px;
-	color: #222!important;
-	font-weight: 800;
-    font-family: "Poppins";
+    font-size: 30px;
+	color: #101010!important;
+	font-weight: 500;
+    font-family: "Ubuntu";
     text-decoration: none;
 	display: block;
 }
@@ -227,7 +227,7 @@ $yellow:#f5bc04;
 }
 
 .fa-trash {
-	color: #c43421 !important;
+	color: #ffffff !important;
 }
 
 .fa-edit {
@@ -250,13 +250,14 @@ $yellow:#f5bc04;
 
 .author {
   display: inline-block;
-  font-weight: 600;
+  font-weight: 00;
   font-size: 15px !important;	
 }
 
 .short-description {
-    font-size: 14px;
-	color: #777;
+    font-size: 20px;
+	color: #000000;
+	font-family: "Lato";
 }
 
 .btn-read {

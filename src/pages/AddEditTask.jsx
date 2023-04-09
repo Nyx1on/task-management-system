@@ -1,31 +1,72 @@
 import React, { useState } from "react";
-import ReactTagInput from "@pathofdev/react-tag-input";
+import { db } from "../firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const inititalForm = {
   title: "",
+  subject: "",
   description: "",
-  category: "",
-  time: "",
-  date: "",
+  time: new Date(0),
+  date: new Date(0),
   duration: "",
   important: "",
 };
 
-const AddEditTask = () => {
+const durationOption = [
+  "15 min",
+  "30 min",
+  "45 min",
+  "1 hour(s)",
+  "2 hour(s)",
+  "3 hour(s)",
+];
+
+const AddEditTask = ({ user }) => {
   const [form, setForm] = useState(inititalForm);
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(null);
 
-  const { title, description, category, time, date, duration, important } =
-    form;
+  const userId = user?.uid;
+  const navigate = useNavigate();
+  const { title, subject, description, time, date, duration, important } = form;
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: [e.target.value] });
+  };
 
-  const handleSubmit = () => {};
+  const handleImportant = (e) => {
+    setForm({ ...form, important: e.target.value });
+  };
 
-  const handleImportant = () => {};
+  const onDurationChange = (e) => {
+    setForm({ ...form, duration: e.target.value });
+  };
 
-  const onDurationChange = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (title && time && date && duration && important) {
+      try {
+        if (userId) {
+          await addDoc(collection(db, "tasks"), {
+            ...form,
+            timestamp: serverTimestamp(),
+            user: user.displayName,
+            userId: user.uid,
+          });
+          toast.success("Task created successfully");
+          navigate("/");
+        } else {
+          toast.error("Please Login to create task");
+        }
+      } catch (err) {
+        console.log(err);
+        navigate("/");
+      }
+    } else {
+      toast.error("Fields marked * are mandatory");
+    }
+  };
 
   return (
     <div className="container-fluid mb-4">
@@ -40,9 +81,19 @@ const AddEditTask = () => {
                 <input
                   type="text"
                   className="form-control input-text-box"
-                  placeholder="Title"
+                  placeholder="Title*"
                   name="title"
                   value={title}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-12 py-3">
+                <input
+                  type="text"
+                  className="form-control input-text-box"
+                  placeholder="Subject*"
+                  name="subject"
+                  value={subject}
                   onChange={handleChange}
                 />
               </div>
@@ -51,7 +102,7 @@ const AddEditTask = () => {
                 <input
                   type="time"
                   className="form-control input-text-box"
-                  placeholder="Start Time"
+                  placeholder="Start Time*"
                   name="time"
                   value={time}
                   onChange={handleChange}
@@ -62,7 +113,7 @@ const AddEditTask = () => {
                 <input
                   type="date"
                   className="form-control input-text-box"
-                  placeholder="Start Date"
+                  placeholder="Start Date*"
                   name="date"
                   value={date}
                   onChange={handleChange}
@@ -74,7 +125,12 @@ const AddEditTask = () => {
                   onChange={onDurationChange}
                   className="catg-dropdown"
                 >
-                  <option>Duration</option>
+                  <option>Duration*</option>
+                  {durationOption.map((option, index) => (
+                    <option value={option} key={index}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="col-12 py-3">
@@ -88,47 +144,43 @@ const AddEditTask = () => {
               </div>
               <div className="col-12 py-3">
                 <div className="form-check-inline mx-2">
-                  <p className="important">Mark as important ?</p>
+                  <p className="important">Mark as important ?*</p>
                 </div>
-                  <div className="form-check-inline mx-2">
-                    <input
-                      type="radio"
-                      className="form-check-input"
-                      value="yes"
-                      name="radioOption"
-                      checked={important === "yes"}
-                      onChange={handleImportant}
-                    />
-                    <label
-                      htmlFor="radioOption"
-                      className="form-check-label mx-2"
-                    >
-                      Yes&nbsp;
-                    </label>
-                  </div>
-                  <div className="form-check-inline mx-2">
-                    <input
-                      type="radio"
-                      className="form-check-input"
-                      value="no"
-                      name="radioOption"
-                      checked={important === "no"}
-                      onChange={handleImportant}
-                    />
-                    <label
-                      htmlFor="radioOption"
-                      className="form-check-label mx-2"
-                    >
-                      No
-                    </label>
-                  </div>
+                <div className="form-check-inline mx-2">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    value="yes"
+                    name="radioOption"
+                    checked={important === "yes"}
+                    onChange={handleImportant}
+                  />
+                  <label
+                    htmlFor="radioOption"
+                    className="form-check-label mx-2"
+                  >
+                    Yes&nbsp;
+                  </label>
+                </div>
+                <div className="form-check-inline mx-2">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    value="no"
+                    name="radioOption"
+                    checked={important === "no"}
+                    onChange={handleImportant}
+                  />
+                  <label
+                    htmlFor="radioOption"
+                    className="form-check-label mx-2"
+                  >
+                    No
+                  </label>
+                </div>
               </div>
               <div className="col-12 py-3 text-center">
-                <button
-                  className="btn btn-add"
-                  type="submit"
-                  disabled={progress !== null && progress < 100}
-                >
+                <button className="btn btn-add" type="submit">
                   Submit
                 </button>
               </div>

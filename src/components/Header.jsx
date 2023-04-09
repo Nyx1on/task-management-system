@@ -7,25 +7,22 @@ const Header = ({ user, handleLogout }) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">
-          Home
+      <nav className="navbar navbar-expand-lg navbar-light">
+        <a className="navbar-brand" href="/" id="logo">
+          <i
+            class="fa-solid fa-calendar-xmark fa-2xl"
+            style={{ color: "#ffc107" }}
+          ></i>
         </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/add/:id">
+              <a className="nav-link" href="/">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/add">
                 Create
               </a>
             </li>
@@ -52,8 +49,13 @@ const Header = ({ user, handleLogout }) => {
             <p style={{ marginTop: "15px", marginLeft: "10px" }}>
               {user?.displayName}
             </p>
-            <li className="nav-item nav-link">
-              <a className="nav-link" href="/auth" onClick={handleLogout} id="log">
+            <li className="navbar-nav nav-item nav-link">
+              <a
+                className="nav-link"
+                href="/auth"
+                onClick={handleLogout}
+                id="log"
+              >
                 Logout
               </a>
             </li>
