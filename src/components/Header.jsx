@@ -3,6 +3,7 @@ import "./header.scss";
 
 const Header = ({ user, handleLogout }) => {
   const userId = user?.uid;
+  const profileName = user?.displayName;
   console.log(user?.displayName);
 
   return (
@@ -10,7 +11,7 @@ const Header = ({ user, handleLogout }) => {
       <nav className="navbar navbar-expand-lg navbar-light">
         <a className="navbar-brand" href="/" id="logo">
           <i
-            class="fa-solid fa-calendar-xmark fa-2xl"
+            className="fa-solid fa-calendar-xmark fa-2xl"
             style={{ color: "#ffc107" }}
           ></i>
         </a>
@@ -47,7 +48,7 @@ const Header = ({ user, handleLogout }) => {
               />
             </div>
             <p style={{ marginTop: "15px", marginLeft: "10px" }}>
-              {user?.displayName}
+              {(user && profileName==="Nirnay Behera")? (<>{user.displayName} (Admin)</>):(<>{user?.displayName}</>)}
             </p>
             <li className="navbar-nav nav-item nav-link">
               <a

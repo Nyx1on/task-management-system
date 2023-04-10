@@ -10,11 +10,8 @@ import {
   doc,
   getDocs,
   limit,
-  onSnapshot,
   query,
   orderBy,
-  where,
-  startAfter,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -25,11 +22,9 @@ function useQuery() {
 const Home = ({ user }) => {
   const [task, setTask] = useState([]);
   const [search, setSearch] = useState("");
-  const [hide, setHide] = useState(false);
   const [loading, setLoading] = useState(false);
   const queryString = useQuery();
   const searchQuery = queryString.get("searchQuery");
-  const location = useLocation();
 
   useEffect(() => {
     getTask();
@@ -56,13 +51,14 @@ const Home = ({ user }) => {
         await deleteDoc(doc(db, "tasks", id));
         toast.success("Task deleted successfully");
         setLoading(false);
-        window.location.reload(false);
       } catch (err) {
         console.log(err);
       }
     }
   };
-  const handleChange = (e) => {};
+
+  const handleChange = (e) => {
+  };
 
   return (
     <div className="container-fluid pb-4 pt-4 padding bg-light">

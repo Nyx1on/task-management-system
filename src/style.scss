@@ -202,21 +202,57 @@ $yellow:#f5bc04;
 	@include box-shadow(0, 2px, 3px, 1px, rgba(0,0,0,0.3));
 }
 
+.card{
+	border: none;
+	padding: 10px;
+	box-shadow: 1px 1px 4px #606060;
+	background-color: #ffc400;
+}
+
+#N{
+	background-color: #66d251;
+}
+
+#J{
+	background-color: #ffc400;
+}
+
+#A{
+	background-color: #22aff5;
+}
 
 .title {
     font-size: 35px;
-	color: #101010!important;
-	font-weight: 500;
-    font-family: 'Poppins';
+	color: #272727 !important;
+    font-family: 'Roboto';
     text-decoration: none;
 	display: block;
+}
+.task-time{
+	font-family: "Lato";
+	font-weight: 500;
+}
+.importantTag{
+    display: inline-block;
+    position: relative;
+    background-color: #d11717;
+    padding: 4px 8px;
+	margin: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: none;
+    line-height: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+	transform: translate(0px,8px);
 }
 
 
 .Meeting{
     display: inline-block;
     position: relative;
-    background-color: #4287f5;
+    background-color: #3d84f7;
     padding: 4px 8px;
     color: #fff;
     text-decoration: none;
@@ -227,6 +263,21 @@ $yellow:#f5bc04;
     border-radius: 4px;
 	transform: translate(0px,8px);
 }
+
+.Appointment{
+    display: inline-block;
+    position: relative;
+    background-color: #ff8e0c;
+    padding: 4px 8px;
+    color: #151515;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: none;
+    line-height: 16px;
+    font-weight: 700;
+    border-radius: 4px;
+	transform: translate(0px,8px);
+} 
 .about{
 	text-align: center;
 	margin: auto;
@@ -239,9 +290,9 @@ $yellow:#f5bc04;
 .Other{
     display: inline-block;
     position: relative;
-    background-color: #66d251;
+    background-color: #2b9ea6;
     padding: 4px 8px;
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     font-size: 14px;
     text-transform: none;
@@ -254,7 +305,7 @@ $yellow:#f5bc04;
 .Deadline{
     display: inline-block;
     position: relative;
-    background-color: #cc2929;
+    background-color: #ef1249;
     padding: 4px 8px;
     color: #fff;
     text-decoration: none;
@@ -295,8 +346,8 @@ $yellow:#f5bc04;
 
 .author {
   display: inline-block;
-  font-weight: 500;
-  font-size: 13px !important;	
+  font-weight: 550;
+  font-size: 15px !important;	
   font-family: 'Open Sans', sans-serif;
 }
 

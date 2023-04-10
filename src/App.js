@@ -13,7 +13,6 @@ import { useEffect,useState } from 'react';
 import Auth from './pages/Auth';
 import {auth} from './firebase';
 import { signOut } from 'firebase/auth';
-import UpdateTask from './pages/UpdateTask';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,9 +39,9 @@ function App() {
       <Header user={user} handleLogout={handleLogout}/>
       <Routes>
         <Route path="/" element={<Home user={user}/>} />
-        <Route path="/detail/:id" element={<Detail/>} />
+        <Route path="/detail/:id" element={<Detail user={user}/>} />
         <Route path="/add" element={<AddEditTask user={user}/>} />
-        <Route path="/update/:id" element={<UpdateTask/>} />
+        <Route path="/update/:id" element={<AddEditTask user={user}/>} />
         <Route path="/about" element={<About/>} />
         <Route path="*" element={<Notfound/>} />
         <Route path="/auth" element={<Auth setUser={setUser}/>} />

@@ -34,19 +34,20 @@ const Auth = ({ setUser }) => {
       if (password !== confirmPassword) {
         return toast.error("Passwords do not match");
       } else {
-        if (firstName && lastName && email && password) {
+        if (firstName && lastName && email && password && confirmPassword) {
           if (password.length <= 6) {
             return toast.error("Password length should be greater than 6");
+          } else {
+            const { user } = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            await updateProfile(user, {
+              displayName: `${firstName} ${lastName}`,
+            });
+            navigate("/");
           }
-          const { user } = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          await updateProfile(user, {
-            displayName: `${firstName} ${lastName}`,
-          });
-          navigate("/");
         } else {
           return toast.error("All fields are mandatory");
         }

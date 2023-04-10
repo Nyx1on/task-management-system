@@ -1,17 +1,22 @@
-import React, { useState } from "react";
-import { db } from "../firebase";
+import React, { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { db } from "../firebase";
+import {
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import Spinner from "../components/Spinner";
 
 const inititalForm = {
   title: "",
-  subject: "",
   category: "",
   description: "",
-  time: new Date(0),
-  date: new Date(0),
+  taskTime: new Date(0),
+  taskDate: new Date(0),
   duration: "",
   important: "",
 };
@@ -23,6 +28,7 @@ const durationOption = [
   "1 hour(s)",
   "2 hour(s)",
   "3 hour(s)",
+  "Unspecified"
 ];
 
 const categoryOption = [
@@ -34,6 +40,9 @@ const categoryOption = [
 
 const AddEditTask = ({ user }) => {
   const [form, setForm] = useState(inititalForm);
+  const [loading, setLoading] = useState(false);
+
+  const { id } = useParams();
 
   const userId = user?.uid;
   const navigate = useNavigate();
@@ -41,11 +50,29 @@ const AddEditTask = ({ user }) => {
     title,
     category,
     description,
-    time,
-    date,
+    taskTime,
+    taskDate,
     duration,
     important,
   } = form;
+
+  useEffect(() => {
+    id && getTask();
+  }, [id]);
+
+  const getTask = async () => {
+    setLoading(true);
+    const docRef = doc(db, "tasks", id);
+    const taskDetail = await getDoc(docRef);
+    if(taskDetail.exists()){
+      setForm(taskDetail.data());
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: [e.target.value] });
@@ -64,7 +91,7 @@ const AddEditTask = ({ user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && time && date && important) {
+    if (title && taskTime && taskDate && important) {
       try {
         if (userId) {
           await addDoc(collection(db, "tasks"), {
@@ -120,27 +147,25 @@ const AddEditTask = ({ user }) => {
                   ))}
                 </select>
               </div>
-              {category === "Project Submission" ? (
+              {category !== "Meeting" && category !== "Other" ? (
                 <>
                   <div className="col-12 col-md-6">
-                    <label className="form-label">Deadline Time</label>
+                    <label className="form-label">{category} Time</label>
                     <input
                       type="time"
                       className="form-control input-text-box"
-                      placeholder="Deadline Time*"
-                      name="time"
-                      value={time}
+                      name="taskTime"
+                      value={taskTime}
                       onChange={handleChange}
                     />
                   </div>
                   <div className="col-12 col-md-6">
-                    <label className="form-label">Deadline Date</label>
+                    <label className="form-label">{category} Date</label>
                     <input
                       type="date"
                       className="form-control input-text-box"
-                      placeholder="Deadline Date*"
-                      name="date"
-                      value={date}
+                      name="taskDate"
+                      value={taskDate}
                       onChange={handleChange}
                     />
                   </div>
@@ -152,9 +177,8 @@ const AddEditTask = ({ user }) => {
                     <input
                       type="time"
                       className="form-control input-text-box"
-                      placeholder="Start Time*"
-                      name="time"
-                      value={time}
+                      name="taskTime"
+                      value={taskTime}
                       onChange={handleChange}
                     />
                   </div>
@@ -163,9 +187,8 @@ const AddEditTask = ({ user }) => {
                     <input
                       type="date"
                       className="form-control input-text-box"
-                      placeholder="Start Date*"
-                      name="date"
-                      value={date}
+                      name="taskDate"
+                      value={taskDate}
                       onChange={handleChange}
                     />
                   </div>
