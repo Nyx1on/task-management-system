@@ -26,7 +26,7 @@ const durationOption = [
 ];
 
 const categoryOption = [
-  "Project Submission",
+  "Deadline",
   "Meeting",
   "Appointment",
   "Other",
@@ -39,13 +39,11 @@ const AddEditTask = ({ user }) => {
   const navigate = useNavigate();
   const {
     title,
-    subject,
     category,
     description,
     time,
     date,
     duration,
-    deadline,
     important,
   } = form;
 
@@ -66,13 +64,13 @@ const AddEditTask = ({ user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (title && time && date && duration && important) {
+    if (title && time && date && important) {
       try {
         if (userId) {
           await addDoc(collection(db, "tasks"), {
             ...form,
             timestamp: serverTimestamp(),
-            user: user.displayName,
+            userName: user.displayName,
             userId: user.uid,
           });
           toast.success("Task created successfully");
@@ -105,16 +103,6 @@ const AddEditTask = ({ user }) => {
                   placeholder="Title*"
                   name="title"
                   value={title}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-12 py-3">
-                <input
-                  type="text"
-                  className="form-control input-text-box"
-                  placeholder="Subject*"
-                  name="subject"
-                  value={subject}
                   onChange={handleChange}
                 />
               </div>
