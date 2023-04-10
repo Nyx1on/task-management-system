@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const inititalForm = {
   title: "",
   subject: "",
+  category: "",
   description: "",
   time: new Date(0),
   date: new Date(0),
@@ -24,12 +25,29 @@ const durationOption = [
   "3 hour(s)",
 ];
 
+const categoryOption = [
+  "Project Submission",
+  "Meeting",
+  "Appointment",
+  "Other",
+];
+
 const AddEditTask = ({ user }) => {
   const [form, setForm] = useState(inititalForm);
 
   const userId = user?.uid;
   const navigate = useNavigate();
-  const { title, subject, description, time, date, duration, important } = form;
+  const {
+    title,
+    subject,
+    category,
+    description,
+    time,
+    date,
+    duration,
+    deadline,
+    important,
+  } = form;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: [e.target.value] });
@@ -41,6 +59,9 @@ const AddEditTask = ({ user }) => {
 
   const onDurationChange = (e) => {
     setForm({ ...form, duration: e.target.value });
+  };
+  const onCategoryChange = (e) => {
+    setForm({ ...form, category: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -97,42 +118,85 @@ const AddEditTask = ({ user }) => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-12 col-md-6">
-                <label className="form-label">Start Time</label>
-                <input
-                  type="time"
-                  className="form-control input-text-box"
-                  placeholder="Start Time*"
-                  name="time"
-                  value={time}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-12 col-md-6">
-                <label className="form-label">Start Date</label>
-                <input
-                  type="date"
-                  className="form-control input-text-box"
-                  placeholder="Start Date*"
-                  name="date"
-                  value={date}
-                  onChange={handleChange}
-                />
-              </div>
               <div className="col-12 py-4">
                 <select
-                  value={duration}
-                  onChange={onDurationChange}
+                  value={category}
+                  onChange={onCategoryChange}
                   className="catg-dropdown"
                 >
-                  <option>Duration*</option>
-                  {durationOption.map((option, index) => (
+                  <option>Category*</option>
+                  {categoryOption.map((option, index) => (
                     <option value={option} key={index}>
                       {option}
                     </option>
                   ))}
                 </select>
               </div>
+              {category === "Project Submission" ? (
+                <>
+                  <div className="col-12 col-md-6">
+                    <label className="form-label">Deadline Time</label>
+                    <input
+                      type="time"
+                      className="form-control input-text-box"
+                      placeholder="Deadline Time*"
+                      name="time"
+                      value={time}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <label className="form-label">Deadline Date</label>
+                    <input
+                      type="date"
+                      className="form-control input-text-box"
+                      placeholder="Deadline Date*"
+                      name="date"
+                      value={date}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="col-12 col-md-6">
+                    <label className="form-label">Start Time</label>
+                    <input
+                      type="time"
+                      className="form-control input-text-box"
+                      placeholder="Start Time*"
+                      name="time"
+                      value={time}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <label className="form-label">Start Date</label>
+                    <input
+                      type="date"
+                      className="form-control input-text-box"
+                      placeholder="Start Date*"
+                      name="date"
+                      value={date}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-12 py-4">
+                    <select
+                      value={duration}
+                      onChange={onDurationChange}
+                      className="catg-dropdown"
+                    >
+                      <option>Duration*</option>
+                      {durationOption.map((option, index) => (
+                        <option value={option} key={index}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
               <div className="col-12 py-3">
                 <textarea
                   className="form-control description-box"

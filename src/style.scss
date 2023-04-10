@@ -203,10 +203,10 @@ $yellow:#f5bc04;
 }
 
 .title {
-    font-size: 30px;
+    font-size: 35px;
 	color: #101010!important;
 	font-weight: 500;
-    font-family: "Ubuntu";
+    font-family: 'Poppins';
     text-decoration: none;
 	display: block;
 }
@@ -222,8 +222,9 @@ $yellow:#f5bc04;
     font-size: 13px;
     text-transform: none;
     line-height: 16px;
-    font-weight: 700;
+    font-weight: 400;
     border-radius: 4px;
+	transform: translate(0px,5px);
 }
 
 .fa-trash {
@@ -250,12 +251,14 @@ $yellow:#f5bc04;
 
 .author {
   display: inline-block;
-  font-weight: 00;
-  font-size: 15px !important;	
+  font-weight: 500;
+  font-size: 13px !important;	
+  font-family: 'Open Sans', sans-serif;
 }
 
 .short-description {
-    font-size: 20px;
+    font-size: 22px;
+	font-weight: 500;
 	color: #000000;
 	font-family: "Lato";
 }

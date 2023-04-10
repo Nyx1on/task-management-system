@@ -22,7 +22,7 @@ const Search = ({ search, handleChange }) => {
             type="text"
             value={search}
             className="form-control search-input"
-            placeholder="Search blog"
+            placeholder="Search task"
             onChange={handleChange}
           />
         </div>

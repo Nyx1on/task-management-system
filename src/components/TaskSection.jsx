@@ -7,6 +7,7 @@ const TaskSection = ({
   title,
   subject,
   description,
+  category,
   userId,
   author,
   timestamp,
@@ -15,13 +16,17 @@ const TaskSection = ({
 }) => {
   return (
     <div>
-      <div className="row pb-4 card card text-bg-warning w-75 mb-3" style={{maxwidth: 18 + "rem;"}} key={id}>
-        <div className="col-md-7">
+      <div
+        className="row pb-4 card card text-bg-warning w-75 mb-3"
+        key={id}
+      >
+        <div className="col-md-15">
           <div className="text-start">
+            <h className="category catg-color">{category}</h>
             <span className="title py-2">{title}</span>
             <span className="meta-info">
               <p className="author">
-                <i>By {user}</i>  - &nbsp;
+                <i>By {user}</i> - &nbsp;
                 {timestamp.toDate().toDateString()}
               </p>
               <p className="short-description text-start">{subject}</p>
